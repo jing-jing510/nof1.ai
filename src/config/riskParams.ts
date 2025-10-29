@@ -30,8 +30,11 @@ export const RISK_PARAMS = {
   // 最大持仓数
   MAX_POSITIONS: Number.parseInt(process.env.MAX_POSITIONS || '5', 10),
   
+  // 最小杠杆倍数
+  MIN_LEVERAGE: Number.parseInt(process.env.MIN_LEVERAGE || '15', 10),
+  
   // 最大杠杆倍数
-  MAX_LEVERAGE: Number.parseInt(process.env.MAX_LEVERAGE || '15', 10),
+  MAX_LEVERAGE: Number.parseInt(process.env.MAX_LEVERAGE || '25', 10),
   
   // 交易币种列表（作为元组以支持 zod.enum）
   TRADING_SYMBOLS: tradingSymbols as [string, ...string[]],

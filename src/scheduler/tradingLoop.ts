@@ -1101,13 +1101,13 @@ async function executeTradingDecision() {
       }
       
       // b) 动态止损检查（根据杠杆）
-      let stopLossPercent = -5; // 默认
-      if (leverage >= 12) {
-        stopLossPercent = -3;
-      } else if (leverage >= 8) {
-        stopLossPercent = -4;
+      let stopLossPercent = -3; // 默认（15-25倍杠杆统一使用-3%）
+      if (leverage >= 22) {
+        stopLossPercent = -2;    // 22-25倍杠杆：更严格的止损
+      } else if (leverage >= 18) {
+        stopLossPercent = -2.5;  // 18-22倍杠杆：适中的止损
       } else {
-        stopLossPercent = -5;
+        stopLossPercent = -3;    // 15-18倍杠杆：相对宽松的止损
       }
       
       if (pnlPercent <= stopLossPercent) {

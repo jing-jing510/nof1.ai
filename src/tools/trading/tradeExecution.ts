@@ -45,7 +45,7 @@ export const openPositionTool = createTool({
   parameters: z.object({
     symbol: z.enum(RISK_PARAMS.TRADING_SYMBOLS).describe("币种代码"),
     side: z.enum(["long", "short"]).describe("方向：long=做多，short=做空"),
-    leverage: z.number().min(5).max(15).describe("杠杆倍数（5-15倍，严格限制）"),
+    leverage: z.number().min(RISK_PARAMS.MIN_LEVERAGE).max(RISK_PARAMS.MAX_LEVERAGE).describe(`杠杆倍数（${RISK_PARAMS.MIN_LEVERAGE}-${RISK_PARAMS.MAX_LEVERAGE}倍，严格限制）`),
     amountUsdt: z.number().describe("开仓金额（USDT）"),
   }),
   execute: async ({ symbol, side, leverage, amountUsdt }) => {
@@ -64,10 +64,10 @@ export const openPositionTool = createTool({
         };
       }
       
-      if (!Number.isFinite(leverage) || leverage < 5 || leverage > 15) {
+      if (!Number.isFinite(leverage) || leverage < RISK_PARAMS.MIN_LEVERAGE || leverage > RISK_PARAMS.MAX_LEVERAGE) {
         return {
           success: false,
-          message: `无效的杠杆倍数: ${leverage}（必须在5-15之间，严格限制以控制风险）`,
+          message: `无效的杠杆倍数: ${leverage}（必须在${RISK_PARAMS.MIN_LEVERAGE}-${RISK_PARAMS.MAX_LEVERAGE}之间，严格限制以控制风险）`,
         };
       }
       
